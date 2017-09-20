@@ -1,0 +1,60 @@
+\ProvidesClass{weekly}[2017/09/20, Johann Lee<me@qinka.pro>, Ver.0.1.0]
+\NeedsTeXFormat{LaTeX2e}
+\LoadClass[oneside,UTF8]{article}
+
+%% pakcgae
+\RequirePackage{environ}
+
+\makeatletter
+\newcommand\report@weekly@text{Date(week)}
+\newcommand\report@hours@text{Working Hours}
+\newcommand\report@name@text{Name}
+\newcommand\report@stuid@text{Stu.Id.}
+\newcommand\report@room@text{Room}
+\newcommand\report@rchdr@text{Research Direction}
+\newcommand\report@crchdr@text{Current Research Direction}
+\makeatother
+
+% your name
+\newtoks\name
+% student id number
+\newtoks\stuid
+% room
+\newtoks\room
+% Research direction
+\newtoks\rchdr
+% current research direction
+\newtoks\crchdr
+
+%% counter
+\makeatletter
+\newcounter{report@counter}
+\makeatother
+
+% new environment
+% for table
+\makeatletter
+\NewEnviron{Report}[2]{%
+  % begin  
+  \setcounter{report@counter}{0}
+  \begin{center}
+    \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}|c|c|c|c|c|c|} \hline
+      \report@weekly@text & \multicolumn{3}{c|}{#1} & \report@hours@text & #2 \\ \hline
+      \report@name@text & \the\name & \report@stuid@text & \the\stuid & \report@room@text & \the\room \\ \hline
+      \report@rchdr@text  & \multicolumn{5}{c|}{\the\rchdr}  \\ \hline
+      \report@crchdr@text & \multicolumn{5}{c|}{\the\crchdr} \\ \hline%
+      \BODY%
+    \end{tabular*}
+  \end{center}
+}
+\makeatother
+\makeatletter
+\NewEnviron{ReportItem}[1]{%
+  \multicolumn{6}{|l|}{%
+    \addtocounter{report@counter}{1}
+    \thereport@counter #1} \\ \hline%
+  \multicolumn{6}{|c|}{\parbox{0.95\linewidth}{\vspace{0.1em} \BODY%
+      \vspace{0.1em}}} \\ \hline
+}
+\makeatother
+
