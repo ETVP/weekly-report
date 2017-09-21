@@ -6,6 +6,9 @@
 \NeedsTeXFormat{LaTeX2e}
 \LoadClass[oneside]{article}
 
+%% package
+\RequirePackage{longtable}
+
 %% new length
 \newlength\squwidth
 \newlength\squiwidth
@@ -40,29 +43,43 @@
 \newcounter{report@counter}
 \makeatother
 
+%% new comment for parbox
+%% parbox with vskip
+\newcommand\vskpparbox[3]{\parbox{#2}{\vskip#1 #3 \vskip#1}}
+%% parbox for report's head
+\newcommand\rhparbox[2]{\vskpparbox{.25em}{#1}{#2}}
+%% parbox for items' head
+\newcommand\rihparbox[2]{\vskpparbox{.5em}{#1}{#2}}
+%% parbox for items
+\newcommand\riparbox[2]{\vskpparbox{.7em}{#1}{\parindent2em #2}}
+
+
+
 %% new environment
 %% for report
 \makeatletter
 \newenvironment{report}[2]{%
     \setlength\squwidth\textwidth \setlength\squiwidth\textwidth
     \advance\squwidth -12\tabcolsep \advance\squiwidth -2\tabcolsep
+    \setlength\LTleft{0pt}
+    \setlength\LTright{0pt}
     \begin{center}
-    \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}|c|c|c|c|c|c|} \hline
-      \parbox{0.16\squwidth}{\centering \report@weekly@text} & \multicolumn{3}{|c|}{\parbox{0.5\squwidth}{\centering #1}} 
-      &\parbox{0.17\squwidth}{\centering \report@hours@text} &  \parbox{0.17\squwidth}{\centering #2} \\ \hline 
-      \parbox{0.16\squwidth}{\centering \report@name@text} & \parbox{0.17\squwidth}{\centering \the\name} & 
-      \parbox{0.17\squwidth}{\centering \report@stuid@text} & \parbox{0.17\squwidth}{\centering \the\stuid}
-      & \parbox{0.17\squwidth}{\centering \report@room@text} &\parbox{0.17\squwidth}{\centering \the\room} \\ \hline 
-      \parbox{0.16\squwidth}{\centering \report@rchdr@text} & \multicolumn{5}{|c|}{\parbox{0.84\squwidth}{\centering \the\rchdr}} \\ \hline 
-      \parbox{0.16\squwidth}{\centering \report@crchdr@text} & \multicolumn{5}{|c|}{\parbox{0.84\squwidth}{\centering \the\crchdr}} \\ \hline}
-      {\end{tabular*}\end{center}}
+    \begin{longtable}{@{\extracolsep{\fill}}|c|c|c|c|c|c|} \hline
+      \rhparbox{0.16\squwidth}{\centering \report@weekly@text} & \multicolumn{3}{|c|}{\rhparbox{0.5\squwidth}{\centering #1}} 
+      &\rhparbox{0.17\squwidth}{\centering \report@hours@text} &  \rhparbox{0.17\squwidth}{\centering #2} \\ \hline 
+      \rhparbox{0.16\squwidth}{\centering \report@name@text} & \rhparbox{0.17\squwidth}{\centering \the\name} & 
+      \rhparbox{0.17\squwidth}{\centering \report@stuid@text} & \rhparbox{0.17\squwidth}{\centering \the\stuid}
+      & \rhparbox{0.17\squwidth}{\centering \report@room@text} &\rhparbox{0.17\squwidth}{\centering \the\room} \\ \hline 
+      \rhparbox{0.16\squwidth}{\centering \report@rchdr@text} & \multicolumn{5}{|c|}{\rhparbox{0.84\squwidth}{\centering \the\rchdr}} \\ \hline 
+      \rhparbox{0.16\squwidth}{\centering \report@crchdr@text} & \multicolumn{5}{|c|}{\rhparbox{0.84\squwidth}{\centering \the\crchdr}} \\ \hline}
+      {\end{longtable}\end{center}}
 \makeatother
 
 \makeatletter
 %% for report items
 \newcommand\ritem[2]{%
-\multicolumn{6}{|l|}{\addtocounter{report@counter}{1}\thereport@counter.\quad #1} \\ \hline
-\multicolumn{6}{|c|}{\parbox{\squiwidth}{\parindent2em \vskip.7em #2 \vskip.7em}} \\ \hline}
+\multicolumn{6}{|l|}{\addtocounter{report@counter}{1} \rihparbox{\squiwidth}{\thereport@counter.\quad #1}} \\ \hline
+\multicolumn{6}{|c|}{\riparbox{\squiwidth}{#2}} \\ \hline}
 \makeatother
 
 %% this week task
