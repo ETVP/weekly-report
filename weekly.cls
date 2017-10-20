@@ -67,7 +67,8 @@
     \advance\squwidth -12\tabcolsep \advance\squiwidth -2\tabcolsep
     \setlength\LTleft{0pt}
     \setlength\LTright{0pt}
-    \pdfbookmark[1]{#1}{}
+    \pdfbookmark[1]{#1}{report:#1}
+    \label{report:#1}
     \begin{center}
     \begin{longtable}{@{\extracolsep{\fill}}|c|c|c|c|c|c|} \hline
       \rhparbox{0.16\squwidth}{\centering \report@weekly@text} & \multicolumn{3}{|c|}{\rhparbox{0.5\squwidth}{\centering #1}} 
