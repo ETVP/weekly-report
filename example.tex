@@ -12,11 +12,10 @@
 \crchdr{Unknown} % current research direction
 \title{Weekly Report}
 \author{Johann Lee \\ me@qinka.pro}
-
 \begin{document}
     \maketitle
-    \begin{report}{date}{hour}
-    \thisweektask{%
+    \report{date}{hour}
+    \thisweektask
         \begin{enumerate}
             \item task 1
             \item task 2
@@ -30,8 +29,7 @@
             \item task 2
             \item task 3
         \end{enumerate}
-    }
-    \thisweekproblem{%
+    \thisweekproblem
         \begin{enumerate}
             \item problem 1
             \item problem 2
@@ -50,8 +48,7 @@
               \end{enumerate}
             \item problem 3
             \end{enumerate}
-    }
-    \nextweekplan{%
+    \nextweekplan
         \begin{enumerate}
             \item plan 1
             \item plan 2
@@ -63,10 +60,8 @@
             \item plan 2
             \item plan 3
         \end{enumerate}
-    }
-    \end{report}
-\begin{report}{date3}{hour}
-\thisweektask{%
+    \report{date3}{hour}
+    \thisweektask
     \begin{enumerate}
         \item task 1
         \item task 2
@@ -80,8 +75,7 @@
         \item task 2
         \item task 3
     \end{enumerate}
-}
-\thisweekproblem{%
+    \thisweekproblem
     \begin{enumerate}
         \item problem 1
         \item problem 2
@@ -100,8 +94,7 @@
         \end{enumerate}
         \item problem 3
     \end{enumerate}
-}
-\nextweekplan{%
+    \nextweekplan
     \begin{enumerate}
         \item plan 1
         \item plan 2
@@ -113,6 +106,4 @@
         \item plan 2
         \item plan 3
     \end{enumerate}
-}
-\end{report}
 \end{document}
