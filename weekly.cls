@@ -98,6 +98,6 @@
 
 \let\oldenddocument\enddocument
 
-\def\document{\oldbegdocument\begin{boxedminipage}[b]{21cm}}
+\def\document{\oldbegdocument\begin{boxedminipage}{21cm}}
     
 \def\enddocument{\end{boxedminipage}\oldenddocument}
