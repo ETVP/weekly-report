@@ -2,10 +2,11 @@
 %% Copyright (C) 2017, Johann Lee <me@qinka.pro> (maintainer)
 %%               2017, Q.L. Lee <liql@sxufe.edu.cn>
 %% (LGPLv3+)
-\ProvidesClass{weekly}[2017/09/20, Johann Lee<me@qinka.pro>, Ver.0.1.0]
+\ProvidesClass{weekly}[2017/09/20, Johann Lee<me@qinka.pro>, Ver.0.2.2]
 \NeedsTeXFormat{LaTeX2e}
-\LoadClass[oneside]{article}
+\LoadClass[border=1cm]{standalone}
 
+\usepackage{boxedminipage}
 
 \RequirePackage{hyperref}
 \hypersetup{colorlinks,linkcolor=blue,anchorcolor=blue,citecolor=red,bookmarksnumbered}
@@ -38,32 +39,6 @@
 \newcounter{report@counter}
 
 
-%% Add frame
-%% Thanks everypa
-\newcommand{\wk@everypage@hook}{}
-\newcommand*{\wk@ep@init}{%
-    \let\wk@op@saved\@outputpage
-    \def\@outputpage{%
-        \wk@op@preamble
-        \wk@op@saved
-        \wk@op@postamble}}
-\newcommand*{\wk@op@preamble}{%
-    \let\wk@begindvi\@begindvi
-    \def\@begindvi{%
-        \wk@everypage@hook
-        \wk@begindvi}}
-\newcommand*{\wk@op@postamble}{%
-    \let\@begindvi\wk@begindvi}
-\AtBeginDocument{%
-    \wk@ep@init
-    \g@addto@macro\wk@everypage@hook{%
-        \begin{tikzpicture}[remember picture, overlay]
-        \draw[line width = 1pt] (current page text area.south west) rectangle (current page text area.north east);
-        \end{tikzpicture}
-    }
-}
-
-
 %% new comment for parbox
 %% parbox with vskip
 \newcommand\vskpparbox[3]{\parbox{#2}{\vskip#1 #3 \vskip#1}}
@@ -80,7 +55,7 @@
 
 %% new command
 \newcommand\report[2]{%
-    \setlength\squwidth\textwidth \setlength\squiwidth\textwidth
+    \setlength\squwidth{20cm} \setlength\squiwidth{20cm}
     \advance\squwidth -12\tabcolsep \advance\squiwidth -2\tabcolsep
     %\setlength\LTleft{0pt}
    % \setlength\LTright{0pt}
@@ -114,3 +89,15 @@
 \newcommand\thisweektask{\subreport{This week's task}}
 \newcommand\thisweekproblem{\subreport{This week's problem}}
 \newcommand\nextweekplan{\subreport{Next week's plan}}
+
+
+
+
+
+\let\oldbegdocument\document
+
+\let\oldenddocument\enddocument
+
+\def\document{\oldbegdocument\begin{boxedminipage}[b]{21cm}}
+    
+\def\enddocument{\end{boxedminipage}\oldenddocument}
