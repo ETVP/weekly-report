@@ -4,7 +4,7 @@
 %% (LGPLv3+)
 \ProvidesClass{weekly}[2017/09/20, Johann Lee<me@qinka.pro>, Ver.0.2.2]
 \NeedsTeXFormat{LaTeX2e}
-\LoadClass[border=1cm]{standalone}
+\LoadClass{standalone}
 
 \usepackage{boxedminipage}
 
@@ -35,9 +35,24 @@
 \RequirePackage{tikz}
 \RequirePackage{tikzpagenodes}
 
+%% box
+\newlength\edgeblank
+\newlength\edgeborder
+\newlength\boxwidth
+\newlength\boxheight
+\setlength{\edgeborder}{1cm}
+\setlength{\edgeblank}{1.5cm}
+\setlength{\boxwidth}{\paperwidth}
+\setlength{\boxheight}{\paperheight}
+\addtolength{\edgeborder}{\edgeblank}
+\addtolength{\boxwidth}{-\edgeblank}
+\addtolength{\boxheight}{-\edgeblank}
+\standaloneconfig{border=\edgeborder}
+
+\newlength{\tempskip}
+
 %% counter
 \newcounter{report@counter}
-
 
 %% new comment for parbox
 %% parbox with vskip
@@ -49,16 +64,23 @@
 %% parbox for items
 \newcommand\riparbox[2]{\vskpparbox{.7em}{#1}{\parindent2em #2}}
 
+
 %% new length
 \newlength\squwidth
 \newlength\squiwidth
 
+%% new return
+\newcommand\newrt{\setlength{\tempskip}{\baselineskip}%
+	\setlength{\baselineskip}{-\baselineskip} \\%
+	\setlength{\baselineskip}{\tempskip}}
+
 %% new command
 \newcommand\report[2]{%
+	\endboxedminipage
+	\newrt
+	\boxedminipage{21cm}
     \setlength\squwidth{20cm} \setlength\squiwidth{20cm}
     \advance\squwidth -12\tabcolsep \advance\squiwidth -2\tabcolsep
-    %\setlength\LTleft{0pt}
-   % \setlength\LTright{0pt}
     \pdfbookmark[1]{#1}{report:#1}
     \label{report:#1}
     \setcounter{report@counter}{0}
@@ -76,28 +98,22 @@
 
 %%% 
 \newcommand\subreport[1]{%
-    \par\noindent
-    \rule{\textwidth}{1pt}
-    \par 
-    \addtocounter{report@counter}{1}
-    \thereport@counter.\quad #1
-    \par\noindent
-    \rule{\textwidth}{1pt}
-    \par
+		
+		\endboxedminipage \\
+		\boxedminipage{21cm}
+    	\addtocounter{report@counter}{1}
+    	\thereport@counter.\quad #1
+    	\endboxedminipage
+    	\par\noindent
+    	\boxedminipage{21cm}    	
 }
 
 \newcommand\thisweektask{\subreport{This week's task}}
 \newcommand\thisweekproblem{\subreport{This week's problem}}
 \newcommand\nextweekplan{\subreport{Next week's plan}}
 
-
-
-
-
 \let\oldbegdocument\document
-
 \let\oldenddocument\enddocument
+\def\document{\oldbegdocument\minipage{21cm}\boxedminipage{21cm}}
+\def\enddocument{\endboxedminipage\endminipage\oldenddocument}
 
-\def\document{\oldbegdocument\begin{boxedminipage}{21cm}}
-    
-\def\enddocument{\end{boxedminipage}\oldenddocument}
