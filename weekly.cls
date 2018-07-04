@@ -4,7 +4,7 @@
 %% (LGPLv3+)
 \ProvidesClass{weekly}[2017/09/20, Johann Lee<me@qinka.pro>, Ver.0.2.2]
 \NeedsTeXFormat{LaTeX2e}
-\LoadClass{standalone}
+\LoadClass[multi=pagegap]{standalone}
 
 \usepackage{boxedminipage}
 
@@ -71,14 +71,14 @@
 
 %% new return
 \newcommand\newrt{\setlength{\tempskip}{\baselineskip}%
-	\setlength{\baselineskip}{-\baselineskip} \\%
+	\setlength{\baselineskip}{-\baselineskip}%
 	\setlength{\baselineskip}{\tempskip}}
 
 %% new command
 \newcommand\report[2]{%
-	\endboxedminipage
-	\newrt
-	\boxedminipage{21cm}
+	\endboxedminipage\endminipage\endpagegap%
+	\newrt%
+	\pagegap\minipage{21cm}\boxedminipage{21cm}%
     \setlength\squwidth{20cm} \setlength\squiwidth{20cm}
     \advance\squwidth -12\tabcolsep \advance\squiwidth -2\tabcolsep
     \pdfbookmark[1]{#1}{report:#1}
@@ -98,7 +98,6 @@
 
 %%% 
 \newcommand\subreport[1]{%
-		
 		\endboxedminipage \\
 		\boxedminipage{21cm}
     	\addtocounter{report@counter}{1}
@@ -112,8 +111,11 @@
 \newcommand\thisweekproblem{\subreport{This week's problem}}
 \newcommand\nextweekplan{\subreport{Next week's plan}}
 
+\newcommand\todaytask{\subreport{当天任务完成情况（含解决的昨日问题）}}
+\newcommand\todayproblem{\subreport{当日问题}}
+
 \let\oldbegdocument\document
 \let\oldenddocument\enddocument
-\def\document{\oldbegdocument\minipage{21cm}\boxedminipage{21cm}}
-\def\enddocument{\endboxedminipage\endminipage\oldenddocument}
+\def\document{\oldbegdocument\pagegap\minipage{21cm}\boxedminipage{21cm}}
+\def\enddocument{\endboxedminipage\endminipage\endpagegap\oldenddocument}
 
